@@ -1,11 +1,6 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const prismaClient_1 = __importDefault(require("../services/prismaClient"));
+import prisma from "../services/prismaClient.js";
 const checkUser = async (chatId) => {
-    const user = await prismaClient_1.default.user.findFirst({
+    const user = await prisma.user.findFirst({
         where: {
             chatId: chatId
         }
@@ -17,4 +12,4 @@ const checkUser = async (chatId) => {
         return false;
     }
 };
-exports.default = checkUser;
+export default checkUser;

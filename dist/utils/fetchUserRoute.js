@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const env_1 = require("../env");
+import { USER_ROUTE } from "../env.js";
 const fetchUser = async (userId) => {
     try {
-        const response = await fetch(env_1.USER_ROUTE + userId);
+        const response = await fetch(USER_ROUTE + userId);
         return await response.json();
     }
     catch (error) {
@@ -11,4 +9,4 @@ const fetchUser = async (userId) => {
         return null;
     }
 };
-exports.default = fetchUser;
+export default fetchUser;
