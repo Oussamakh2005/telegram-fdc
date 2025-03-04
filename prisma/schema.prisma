@@ -13,12 +13,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
   id        String   @id @default(cuid())
   chatId    String   @unique
   siteId    String
   name      String
   points   Int      @default(0)
+  role     Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Assignment {
+  id        String   @id @default(cuid())
+  title    String
+  content  String[]
+  playlist String
+  video    String[]
+  tasks   String[]
+  isAvailable Boolean @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

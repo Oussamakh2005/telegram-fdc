@@ -1,6 +1,6 @@
 import prisma from "../services/prismaClient.js";
 import checkUser from "./checkUser.js";
-import fetchUser from "./fetchUserRoute.js";
+import fetchMockUser from "./fetchMockUser.js";
 import siteIdExtractor from "./siteIdExtractor.js";
 const registerUser = async (chatId, profileLink) => {
     const isRegistred = await checkUser(chatId);
@@ -8,7 +8,7 @@ const registerUser = async (chatId, profileLink) => {
         return "User already registered";
     }
     const siteId = siteIdExtractor(profileLink);
-    const userData = await fetchUser(siteId);
+    const userData = fetchMockUser(siteId);
     if (!userData) {
         return "no user with this profile link";
     }

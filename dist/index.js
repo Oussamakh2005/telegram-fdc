@@ -1,6 +1,10 @@
 import { Telegraf } from "telegraf";
 import { BOT_TOKEN } from "./env.js";
 import registerUser from "./utils/registerUser.js";
+import checkAdmin from "./utils/checkAdmin.js";
+import uploadAssignment from "./utils/uploadAssignment.js";
+import checkUser from "./utils/checkUser.js";
+import getLeaderBoard from "./utils/getLeaderBoard.js";
 const bot = new Telegraf(BOT_TOKEN);
 bot.start((ctx) => ctx.reply(`Welcome to the Daily Coding Challenges bot!
 this bot is still under development and will be ready soon.
@@ -25,6 +29,38 @@ bot.command("register", async (ctx) => {
         const profileLink = messageText[1];
         const message = await registerUser(ctx.message.from.id.toString(), profileLink);
         ctx.reply(message);
+    }
+});
+bot.command("leaderboard", async (ctx) => {
+    if (!checkUser(ctx.message.from.id.toString())) {
+        return ctx.reply("❌ يرجى تسجيل حسابك أولاً عن طريق /register");
+    }
+    else {
+        return ctx.reply(await getLeaderBoard());
+    }
+});
+bot.on("message", (ctx) => {
+    if (!ctx.message) {
+        return ctx.reply("❌ لم يتم استلام أي رسالة.");
+    }
+    else {
+        if ('caption' in ctx.message && ctx.message.caption === "/newAssignment") {
+            if (!checkAdmin(ctx.message.from.id.toString())) {
+                return ctx.reply("❌ ليس لديك صلاحية لاستخدام هذا الأمر.");
+            }
+            else {
+                if ('document' in ctx.message && ctx.message.document && ctx.message.document.mime_type === "application/json") {
+                    const fileId = ctx.message.document.file_id;
+                    uploadAssignment(fileId, ctx);
+                }
+                else {
+                    return ctx.reply("📂 يرجى إرسال ملف JSON مع هذا الأمر.");
+                }
+            }
+        }
+        else {
+            return ctx.reply("❌ هذا الأمر غير معروف.");
+        }
     }
 });
 bot.launch(() => {
