@@ -25,6 +25,7 @@ model User {
   name      String
   points   Int      @default(0)
   role     Role     @default(USER)
+  Answers  Answer[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -36,7 +37,18 @@ model Assignment {
   playlist String
   video    String[]
   tasks   String[]
-  isAvailable Boolean @default(true)
+  isAvailable Boolean @default(false)
+  Answers  Answer[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Answer {
+  id String @id @default(cuid())
+  chatId String
+  assigmentId String
+  user User @relation(fields: [chatId] , references: [chatId])
+  assigment Assignment @relation(fields: [assigmentId] , references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

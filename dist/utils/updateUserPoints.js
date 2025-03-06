@@ -1,5 +1,5 @@
 import prisma from "../services/prismaClient.js";
-const UpdateUserPoints = async (chatId, points) => {
+const updateUserPoints = async (chatId, points) => {
     const user = await prisma.user.findFirst({
         where: {
             chatId: chatId
@@ -21,3 +21,4 @@ const UpdateUserPoints = async (chatId, points) => {
     }
     return "User not found";
 };
+export default updateUserPoints;
