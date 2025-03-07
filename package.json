@@ -5,8 +5,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "tsx ./src/index.ts",
-    "start": "node ./dist/index.js",
-    "fetch": "tsx ./src/utils/fetchUserRoute.ts"
+    "fetch": "tsx ./src/utils/fetchUserRoute.ts",
+    "generate": "npx prisma generate",
+    "migrate": "npx prisma migrate deploy",
+    "prisma": "npm run generate && npm run migrate",
+    "deploy": "npm install --omit-=dev && npm run prisma && npm uninstall prisma",
+    "start": "node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -17,12 +21,12 @@
     "@prisma/client": "^6.4.1",
     "dotenv": "^16.4.7",
     "node-cron": "^3.0.3",
+    "prisma": "^6.4.1",
     "telegraf": "^4.16.3"
   },
   "devDependencies": {
     "@types/node": "^22.13.8",
     "@types/node-cron": "^3.0.11",
-    "prisma": "^6.4.1",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
