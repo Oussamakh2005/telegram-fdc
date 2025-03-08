@@ -36,7 +36,7 @@ const assigScheduling = (id) => {
                 }
             });
             task.stop();
-        }, 1000 * 60);
+        }, 1000 * 60 * 60 * 24);
     });
 };
 export default assigScheduling;
