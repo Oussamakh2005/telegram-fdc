@@ -26,7 +26,6 @@ const assigScheduling = (id) => {
                 continue;
             }
         }
-        console.log("assignmen activated successfully");
         setTimeout(async () => {
             await prisma.assignment.update({
                 where: {
@@ -36,7 +35,6 @@ const assigScheduling = (id) => {
                     isAvailable: false
                 }
             });
-            console.log("assignment disactivated successfully");
             task.stop();
         }, 1000 * 60);
     });

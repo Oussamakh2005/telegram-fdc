@@ -108,7 +108,5 @@ bot.on("message", (ctx) => {
         }
     }
 });
-bot.launch(() => {
-    console.log("Bot started");
-});
+bot.launch();
 export default bot;
