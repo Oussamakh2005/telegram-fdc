@@ -1,6 +1,6 @@
 import prisma from "../services/prismaClient.js";
 const checkAdmin = async (chatId) => {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
         where: {
             chatId: chatId
         }
