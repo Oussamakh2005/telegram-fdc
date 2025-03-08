@@ -9,7 +9,7 @@
     "migrate": "prisma migrate deploy",
     "generate": "prisma generate",
     "prisma": "npm run migrate && npm run generate",
-    "deploy": "npm install --omit=dev && npm run prisma",
+    "deploy": "npm install --omit=dev && npm run prisma && npm uninstall prisma",
     "start": "node ./dist/index.js"
   },
   "keywords": [],
