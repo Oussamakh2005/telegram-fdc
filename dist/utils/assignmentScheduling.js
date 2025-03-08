@@ -3,7 +3,7 @@ import prisma from '../services/prismaClient.js';
 import bot from '../index.js';
 import getAssignment from './getAssignment.js';
 const assigScheduling = (id) => {
-    const task = cron.schedule('0 8 * * *', async () => {
+    const task = cron.schedule('0 7 * * *', async () => {
         await prisma.assignment.update({
             where: {
                 id: id,
