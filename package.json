@@ -8,7 +8,7 @@
     "fetch": "tsx ./src/utils/fetchUserRoute.ts",
     "generate": "npx prisma generate",
     "migrate": "npx prisma migrate deploy",
-    "prisma": "npm run generate && npm run migrate",
+    "prisma": "npm run migrate && npm run generate",
     "deploy": "npm install --omit=dev && npm run prisma",
     "start": "node ./dist/index.js"
   },
