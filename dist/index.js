@@ -31,7 +31,7 @@ bot.command("register", async (ctx) => {
     }
 });
 bot.command('me', async (ctx) => {
-    if (!checkUser(ctx.message.from.id.toString())) {
+    if (!await checkUser(ctx.message.from.id.toString())) {
         return ctx.reply(registerMessage);
     }
     else {
@@ -39,7 +39,7 @@ bot.command('me', async (ctx) => {
     }
 });
 bot.command("leaderboard", async (ctx) => {
-    if (!checkUser(ctx.message.from.id.toString())) {
+    if (!await checkUser(ctx.message.from.id.toString())) {
         return ctx.reply(registerMessage);
     }
     else {
@@ -47,7 +47,7 @@ bot.command("leaderboard", async (ctx) => {
     }
 });
 bot.command("assignment", async (ctx) => {
-    if (!checkUser(ctx.message.from.id.toString())) {
+    if (!await checkUser(ctx.message.from.id.toString())) {
         return ctx.reply(registerMessage);
     }
     else {
@@ -55,7 +55,7 @@ bot.command("assignment", async (ctx) => {
     }
 });
 bot.command('answer', async (ctx) => {
-    if (!checkUser(ctx.message.from.id.toString())) {
+    if (!await checkUser(ctx.message.from.id.toString())) {
         return ctx.reply(registerMessage);
     }
     else {
