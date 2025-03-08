@@ -84,19 +84,19 @@ bot.command('answer', async (ctx) => {
         }
     }
 });
-bot.on("message", (ctx) => {
+bot.on("message", async (ctx) => {
     if (!ctx.message) {
         return ctx.reply(noMessageHasBeenReceived);
     }
     else {
         if ('caption' in ctx.message && ctx.message.caption === "/newAssignment") {
-            if (!checkAdmin(ctx.message.from.id.toString())) {
+            if (!await checkAdmin(ctx.message.from.id.toString())) {
                 return ctx.reply(UnautherizedMessage);
             }
             else {
                 if ('document' in ctx.message && ctx.message.document && ctx.message.document.mime_type === "application/json") {
                     const fileId = ctx.message.document.file_id;
-                    uploadAssignment(fileId, ctx);
+                    await uploadAssignment(fileId, ctx);
                 }
                 else {
                     return ctx.reply(pleaseSendJSONMessage);
