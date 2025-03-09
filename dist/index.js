@@ -14,7 +14,7 @@ import updateUserPoints from "./utils/updateUserPoints.js";
 import setupNotes from "./utils/setupNotes.js";
 import checkIfAlreadyAnswer from "./utils/checkIfAlreadyAnswer.js";
 import createAnswer from "./utils/createAnswer.js";
-import { helpMessage, infoMessage, noMessageHasBeenReceived, noTaskMessage, pleaseSendJSONMessage, registerLinkMessage, registerMessage, taskAlreadyDoneMessage, UnautherizedMessage, unExpectedErrorMessage, unknownCommand } from "./messages/messages.js";
+import { helpMessage, infoMessage, noMessageHasBeenReceived, noTaskMessage, pleaseSendJSONMessage, registerLinkMessage, registerMessage, shortAnswerMessage, taskAlreadyDoneMessage, UnautherizedMessage, unExpectedErrorMessage, unknownCommand } from "./messages/messages.js";
 const bot = new Telegraf(BOT_TOKEN);
 bot.start((ctx) => ctx.reply(infoMessage));
 bot.command("info", (ctx) => ctx.reply(infoMessage));
@@ -69,16 +69,21 @@ bot.command('answer', async (ctx) => {
             }
             else {
                 const code = ctx.message.text.substring(7);
-                const prompt = setupPrompt(code, assignment.message);
-                const data = await getAnswer(prompt);
-                if (!data) {
-                    ctx.reply(unExpectedErrorMessage);
+                if (code.length < 20) {
+                    ctx.reply(shortAnswerMessage);
                 }
                 else {
-                    await createAnswer(ctx.message.from.id.toString(), assignment.id);
-                    await updateUserPoints(ctx.message.from.id.toString(), data.average);
-                    const message = setupNotes(data.note, data.average);
-                    ctx.reply(message, { parse_mode: 'Markdown' });
+                    const prompt = setupPrompt(code, assignment.message);
+                    const data = await getAnswer(prompt);
+                    if (!data) {
+                        ctx.reply(unExpectedErrorMessage);
+                    }
+                    else {
+                        await createAnswer(ctx.message.from.id.toString(), assignment.id);
+                        await updateUserPoints(ctx.message.from.id.toString(), data.average);
+                        const message = setupNotes(data.note, data.average);
+                        ctx.reply(message, { parse_mode: 'Markdown' });
+                    }
                 }
             }
         }
