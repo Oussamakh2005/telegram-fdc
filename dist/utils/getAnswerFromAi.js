@@ -2,8 +2,15 @@ import model from "../services/gemini.js";
 const getAnswer = async (prompt) => {
     try {
         const answer = await model.generateContent(prompt);
-        const data = JSON.parse(answer.response.text().substring(7, answer.response.text().length - 3));
-        return data;
+        const rawText = answer.response.text();
+        const jsonMatch = rawText.match(/\{.*\}/s);
+        if (jsonMatch) {
+            const data = JSON.parse(jsonMatch[0]);
+            return data;
+        }
+        else {
+            return null;
+        }
     }
     catch (err) {
         return null;
