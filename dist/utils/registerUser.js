@@ -1,3 +1,4 @@
+import { userAlreadyRegistredMessage, userRegistredSuccessMessage, wrongProfileLinkMessage } from "../messages/messages.js";
 import prisma from "../services/prismaClient.js";
 import checkUser from "./checkUser.js";
 import fetchUser from "./fetchUserRoute.js";
@@ -5,12 +6,12 @@ import siteIdExtractor from "./siteIdExtractor.js";
 const registerUser = async (chatId, profileLink) => {
     const isRegistred = await checkUser(chatId);
     if (isRegistred) {
-        return "User already registered";
+        return userAlreadyRegistredMessage;
     }
     const siteId = siteIdExtractor(profileLink);
     const userData = await fetchUser(siteId);
     if (!userData) {
-        return "no user with this profile link";
+        return wrongProfileLinkMessage;
     }
     else {
         await prisma.user.create({
@@ -20,7 +21,7 @@ const registerUser = async (chatId, profileLink) => {
                 name: userData.name
             }
         });
-        return "User registered successfully";
+        return userRegistredSuccessMessage;
     }
 };
 export default registerUser;

@@ -80,6 +80,7 @@ bot.command('answer', async (ctx) => {
                     }
                     else {
                         await createAnswer(ctx.message.from.id.toString(), assignment.id);
+                        data.average = (data.average > 10) ? 10 : data.average;
                         await updateUserPoints(ctx.message.from.id.toString(), data.average);
                         const message = setupNotes(data.note, data.average);
                         ctx.reply(message, { parse_mode: 'Markdown' });
