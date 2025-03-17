@@ -39,7 +39,7 @@ export const wrongProfileLinkMessage = "رابط الملف الشخصي خاط�
 export const userAlreadyRegistredMessage = "أنت مسجل بالفعل ❕️";
 export const linkMessae = "أدخل إجابتك في الرابط التالي 🔗 👇 \n";
 export const codeSendMessage = "تم إرسال الكود بنجاح ✅️";
-export const whatNewMessage = `الجديد في code mentor الاصدار 1.1 🤖
+export const whatNewMessage = `الجديد في code mentor الاصدار 2.0.0 🤖
 الآن لم تعد بحاجه لكتابة الكود الخاص بك في telegram 
 مع خاصية محرر الأكواد كل ماعليك هو أن ترسل
  /assignment 
