@@ -20,7 +20,7 @@ const assigScheduling = (id) => {
         const message = await getAssignment();
         for (const user of users) {
             try {
-                bot.telegram.sendMessage(user.chatId, message);
+                await bot.telegram.sendMessage(user.chatId, message);
             }
             catch (err) {
                 continue;
