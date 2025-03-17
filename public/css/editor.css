@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #1e1e1e;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #282c34;
+    padding: 10px 20px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+select, button {
+    background: #3a3f4b;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button {
+    background: #0078d7;
+}
+
+#editor-container {
+    flex-grow: 1;
+    height: 100%;
+}
+/* Toast Container */
+#toast-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1000; /* Ensure it's on top of everything */
+    pointer-events: none; /* Allows clicks to pass through */
+}
+
+/* Toast Box */
+#toast {
+    background-color: #dc3545; /* Red background (Bootstrap's error color) */
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    font-size: 1rem;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(20px); /* Start off-screen */
+    direction: rtl; /* Right-to-left text direction */
+    text-align: right; /* Ensure text is aligned to the right */
+    pointer-events: auto; /* Make the toast clickable if needed */
+}
+
+#toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#toast.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+}
+

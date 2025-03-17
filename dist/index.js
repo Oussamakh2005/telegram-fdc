@@ -1,5 +1,5 @@
 import { Telegraf } from "telegraf";
-import { BOT_TOKEN } from "./env.js";
+import { BOT_TOKEN, PUBLIC_URL } from "./env.js";
 import registerUser from "./utils/registerUser.js";
 import checkAdmin from "./utils/checkAdmin.js";
 import uploadAssignment from "./utils/uploadAssignment.js";
@@ -8,17 +8,16 @@ import getLeaderBoard from "./utils/getLeaderBoard.js";
 import getAssignment from "./utils/getAssignment.js";
 import getUserData from "./utils/getUserData.js";
 import getTask from "./utils/getTask.js";
-import setupPrompt from "./utils/setupPrompt.js";
-import getAnswer from "./utils/getAnswerFromAi.js";
-import updateUserPoints from "./utils/updateUserPoints.js";
-import setupNotes from "./utils/setupNotes.js";
 import checkIfAlreadyAnswer from "./utils/checkIfAlreadyAnswer.js";
-import createAnswer from "./utils/createAnswer.js";
-import { helpMessage, infoMessage, noMessageHasBeenReceived, noTaskMessage, pleaseSendJSONMessage, registerLinkMessage, registerMessage, shortAnswerMessage, taskAlreadyDoneMessage, UnautherizedMessage, unExpectedErrorMessage, unknownCommand } from "./messages/messages.js";
+import { helpMessage, infoMessage, linkMessae, noMessageHasBeenReceived, noTaskMessage, pleaseSendJSONMessage, registerLinkMessage, registerMessage, taskAlreadyDoneMessage, UnautherizedMessage, unknownCommand, whatNewMessage } from "./messages/messages.js";
+import { signToken } from "./utils/jwtHelper.js";
 const bot = new Telegraf(BOT_TOKEN);
 bot.start((ctx) => ctx.reply(infoMessage));
 bot.command("info", (ctx) => ctx.reply(infoMessage));
 bot.command('help', (ctx) => ctx.reply(helpMessage));
+bot.command('new', (ctx) => {
+    ctx.reply(whatNewMessage);
+});
 bot.command("register", async (ctx) => {
     const messageText = ctx.message.text.split(" ");
     if (messageText.length !== 2) {
@@ -55,6 +54,7 @@ bot.command("assignment", async (ctx) => {
     }
 });
 bot.command('answer', async (ctx) => {
+    const chatId = ctx.message.from.id.toString();
     if (!await checkUser(ctx.message.from.id.toString())) {
         return ctx.reply(registerMessage);
     }
@@ -64,28 +64,16 @@ bot.command('answer', async (ctx) => {
             ctx.reply(noTaskMessage);
         }
         else {
-            if (await checkIfAlreadyAnswer(ctx.message.from.id.toString(), assignment.id)) {
+            if (await checkIfAlreadyAnswer(chatId, assignment.id)) {
                 ctx.reply(taskAlreadyDoneMessage);
             }
             else {
-                const code = ctx.message.text.substring(7);
-                if (code.length < 20) {
-                    ctx.reply(shortAnswerMessage);
-                }
-                else {
-                    const prompt = setupPrompt(code, assignment.message);
-                    const data = await getAnswer(prompt);
-                    if (!data) {
-                        ctx.reply(unExpectedErrorMessage);
+                const token = signToken({ chatId: chatId }, 1000 * 60 * 10);
+                ctx.reply(linkMessae, {
+                    reply_markup: {
+                        inline_keyboard: [[{ text: "افتح الرابط", url: `${PUBLIC_URL}editor?token=${token}` }]]
                     }
-                    else {
-                        await createAnswer(ctx.message.from.id.toString(), assignment.id);
-                        data.average = (data.average > 10) ? 10 : data.average;
-                        await updateUserPoints(ctx.message.from.id.toString(), data.average);
-                        const message = setupNotes(data.note, data.average);
-                        ctx.reply(message, { parse_mode: 'Markdown' });
-                    }
-                }
+                });
             }
         }
     }
@@ -114,5 +102,4 @@ bot.on("message", async (ctx) => {
         }
     }
 });
-bot.launch();
 export default bot;

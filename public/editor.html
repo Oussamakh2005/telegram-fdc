@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Mentor</title>
+    <link rel="stylesheet" href="/css/editor.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <div class="profile">
+            <img src="https://i.postimg.cc/Bv3S4cb7/IMG-20250305-165127-210.jpg" alt="Profile">
+            <span>Code Mentor</span>
+        </div>
+        <select id="language-selector">
+            <option value="javascript">JavaScript</option>
+            <option value="typescript">TypeScript</option>
+            <option value="html">HTML</option>
+            <option value="python">Python</option>
+            <option value="cpp">C++</option>
+        </select>
+        <button id="submit-code">تأكيد الكود</button>
+    </div>
+
+    <div id="editor-container"></div>
+    <div id="toast-container">
+        <div id="toast" class="hidden">
+            <span id="toast-message"></span>
+        </div>
+    </div>
+    <script src="/js/editor.js"></script>
+
+</body>
+
+</html>

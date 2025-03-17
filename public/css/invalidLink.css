@@ -1,0 +1,48 @@
+/* تنسيق الوضع الليلي */
+body {
+    font-family: 'Tajawal', sans-serif;
+    background-color: #121212;
+    color: #ff6b6b;
+    text-align: center;
+    padding: 50px;
+    direction: rtl;
+}
+
+.container {
+    max-width: 400px;
+    margin: auto;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+    position: relative;
+    text-align: center;
+}
+
+/* صورة الدائرة */
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-top: -40px;
+    background-color: #fff;
+    object-fit: cover;
+    border: 3px solid #ff6b6b;
+}
+
+/* اسم المرشد */
+.mentor-name {
+    color: #ffcccc;
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+p {
+    margin: 15px 0;
+    color: #ffcccc;
+    font-size: 18px;
+}
